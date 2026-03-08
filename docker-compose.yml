@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ocr-backend
+    container_name: ocr-backend
+    ports:
+      - "8000:8000"
+    networks:
+      - ocr-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Browser will call this URL (host backend port)
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    image: ocr-frontend
+    container_name: ocr-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ocr-net
+
+networks:
+  ocr-net:
+    driver: bridge
