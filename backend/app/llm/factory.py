@@ -4,6 +4,7 @@ from typing import Optional
 
 from app.llm.base import LLMAdapter
 from app.llm.gemini_adapter import GeminiAdapter
+from app.llm.mock_adapter import MockLLMAdapter
 
 
 def create_llm_adapter(
@@ -26,6 +27,9 @@ def create_llm_adapter(
     """
     provider = provider.lower()
 
+    if provider == "mock":
+        return MockLLMAdapter()
+
     if provider == "gemini":
         if not api_key:
             raise ValueError("Gemini API key is required")
@@ -34,8 +38,7 @@ def create_llm_adapter(
             model=model or "gemini-2.5-flash"
         )
 
-    else:
-        raise ValueError(
-            f"Unknown LLM provider: {provider}. "
-            f"Supported providers: gemini"
-        )
+    raise ValueError(
+        f"Unknown LLM provider: {provider}. "
+        f"Supported providers: gemini, mock"
+    )

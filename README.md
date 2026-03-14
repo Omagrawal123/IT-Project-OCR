@@ -198,7 +198,7 @@ The system is aimed at posters in **German** or **English**. Default OCR languag
 
 ## Testing
 
-- **Backend**: From `backend`, run `pytest tests/ -v` (add `--cov=app` for coverage if configured).
+- **Backend**: From `backend`, install test deps with `pip install -r requirements-dev.txt`, then run `pytest tests/ -v`. Use `-m "not slow"` to skip the full-pipeline test (OCR + mock LLM). Run `pytest tests/ -v` with no filter to include the slow test.
 - **Manual**: Use German and English posters; try `force_route=ocr_first` and `force_route=vision`; check that dates/times (including opening and special hours) and venue/event name are correct and that umlauts appear where expected.
 
 ## Deployment
